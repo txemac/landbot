@@ -1,0 +1,11 @@
+services:
+  api:
+    build: .
+    container_name: landbot_api
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=TEST
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - .:/api
