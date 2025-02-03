@@ -6,7 +6,7 @@ from tests.utils import assert_dicts
 
 
 def test_health_200(client):
-    url = reverse('health_check')
+    url = reverse("health_check")
 
     response = client.get(url)
 
