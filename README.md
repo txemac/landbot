@@ -55,3 +55,33 @@ future is easy.
 - Pydantic: Data validation and settings management using Python type hinting.
 
 ## 3. How to run the project
+To run the project you need to have Docker and Docker-compose installed in your machine.
+And use make:
+- you can check the options with the command:
+```bash
+make help
+```
+- To run the project with virtual environment:
+```bash
+make start
+```
+- Or with Docker:
+```bash
+make up
+```
+- To stop the project:
+```bash
+make down
+```
+- To run the tests:
+```bash
+make test
+```
+- To run the linters:
+```bash
+make lint 
+```
+- To run the formaters:
+```bash
+make format
+```
