@@ -1,0 +1,40 @@
+[project]
+name = "backend-challenge"
+version = "0.1.0"
+description = "Landbot backend challenge"
+authors = [
+    { name = "txemac", email = "txema.bermudez@gmail.com" }
+]
+readme = "README.md"
+requires-python = ">=3.13"
+
+
+[tool.poetry.dependencies]
+python = "3.13.1"
+django = "5.1.5"
+djangorestframework = "3.15.2"
+pytest-django = "^4.9.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "8.3.4"
+flake8 = "7.1.1"
+black = "25.1.0"
+
+
+[tool.black]
+line-length = 120
+target-version = ['py313']
+
+
+[tool.poetry.scripts]
+format = "black ."
+
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "landbot.settings"
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
