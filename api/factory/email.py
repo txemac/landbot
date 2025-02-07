@@ -1,4 +1,5 @@
 from api.factory.base import NotificationFactory
+from landbot.tasks import send_email_task
 
 
 class EmailNotificationFactory(NotificationFactory):
@@ -9,6 +10,5 @@ class EmailNotificationFactory(NotificationFactory):
         self,
         message: str,
     ) -> bool:
-        # Mock email sending
-        print(f"Sending Email: {message}")
+        send_email_task.delay(message=message)
         return True
