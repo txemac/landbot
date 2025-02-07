@@ -1,5 +1,6 @@
 from unittest import mock
 
+from api.messages import ERROR_UNSUPPORTED_TOPIC
 from api.messages import ERROR_VALIDATE_PARAMETERS
 from api.messages import NOTIFICATION_SENT
 from django.test import SimpleTestCase
@@ -87,3 +88,4 @@ class NotificationTests(SimpleTestCase):
             data=self.data,
         )
         assert response.status_code == status.HTTP_400_BAD_REQUEST
+        assert response.json()["error"] == ERROR_UNSUPPORTED_TOPIC

@@ -117,3 +117,6 @@ EMAIL_HOST_USER = "email@gmail.com"
 EMAIL_HOST_PASSWORD = "email_password"
 DEFAULT_FROM_EMAIL = "email@gmail.com"
 RECIPIENT_LIST = ["email1@gmail.com", "email2@gmail.com"]
+
+# Slack
+SLACK_WEBHOOK_URL = "https://hooks.slack.com/services/TXXXXXX/BXXXXXX/XXXXXXXX"
