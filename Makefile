@@ -2,7 +2,6 @@
 # Command to show help
 APP_NAME = Landbot Backend Challengue
 HELP = Show this help.
-START = Start the application with uvicorn.
 UP = Start the application with docker.
 DOWN = Down the docker service.
 RM = Remove containers.
@@ -17,7 +16,6 @@ $(APP_NAME)
 
 Available commands:
   make help    - $(HELP)
-  make start   - $(START)
   make up      - $(UP)
   make down    - $(DOWN)
   make rm      - $(RM)
@@ -30,12 +28,6 @@ export MENU
 
 help:
 	@echo "$$MENU"
-
-# Command to start the application
-start:
-	@echo $(START)
-	poetry install --no-root --no-interaction --no-ansi
-	poetry run python3 manage.py runserver
 
 # docker commands
 up:
@@ -66,4 +58,6 @@ test:
 	@echo "Installing dependencies..."
 	poetry install --no-root --no-interaction --no-ansi --with dev
 	@echo $(TEST)
+	docker compose up -d redis celery_worker
 	poetry run pytest -vvv tests/
+	make down

@@ -1,3 +1,5 @@
+from unittest import mock
+
 from api.messages import ERROR_VALIDATE_PARAMETERS
 from api.messages import NOTIFICATION_SENT
 from django.test import SimpleTestCase
@@ -57,7 +59,8 @@ class NotificationTests(SimpleTestCase):
         assert response.status_code == status.HTTP_400_BAD_REQUEST
         assert response.json()["error"] == ERROR_VALIDATE_PARAMETERS
 
-    def test_notification_email(self):
+    @mock.patch("api.factory.slack.send_slack_task.delay")
+    def test_notification_slack(self, mock_send_slack_task):
         self.data["topic"] = "Sales"
         response = self.client.post(
             path=self.url,
@@ -65,14 +68,17 @@ class NotificationTests(SimpleTestCase):
         )
         assert response.status_code == status.HTTP_200_OK
         assert response.json()["message"] == f"{NOTIFICATION_SENT} by Slack"
+        mock_send_slack_task.assert_called_once_with(message=self.data["description"])
 
-    def test_notification_slack(self):
+    @mock.patch("api.factory.email.send_email_task.delay")
+    def test_notification_email(self, mock_send_email_task):
         response = self.client.post(
             path=self.url,
             data=self.data,
         )
         assert response.status_code == status.HTTP_200_OK
         assert response.json()["message"] == f"{NOTIFICATION_SENT} by Email"
+        mock_send_email_task.assert_called_once_with(message=self.data["description"])
 
     def test_notification_invalid_topic(self):
         self.data["topic"] = "invalid"

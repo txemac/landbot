@@ -53,6 +53,8 @@ future is easy.
 - CI: I use Github Actions to run the tests and the linters.
 - Makefile: I use a Makefile to run the commands.
 - Pydantic: Data validation and settings management using Python type hinting.
+- Celery: Celery is an asynchronous task queue/job queue based on distributed message passing. We use in this app to
+  improve the performance.
 
 ## 3. How to run the project
 To run the project you need to have Docker and Docker-compose installed in your machine.
@@ -61,11 +63,8 @@ And use make:
 ```bash
 make help
 ```
-- To run the project with virtual environment:
-```bash
-make start
-```
-- Or with Docker:
+
+- To run the project with Docker:
 ```bash
 make up
 ```

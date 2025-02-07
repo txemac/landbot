@@ -1,4 +1,5 @@
 from api.factory.base import NotificationFactory
+from landbot.tasks import send_slack_task
 
 
 class SlackNotificationFactory(NotificationFactory):
@@ -9,6 +10,5 @@ class SlackNotificationFactory(NotificationFactory):
         self,
         message: str,
     ) -> bool:
-        # Implement Slack API call
-        print(f"Sending to Slack: {message}")
+        send_slack_task.delay(message=message)
         return True

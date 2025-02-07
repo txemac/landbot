@@ -6,6 +6,13 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    services:
+      redis:
+        image: redis:alpine
+        ports:
+          - 6379:6379
+        options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -29,6 +36,16 @@ jobs:
         run: |
           poetry run flake8 . --show-source --max-complexity=10 --max-line-length=128 --statistics
 
+      - name: Start celery worker
+        run: |
+          poetry run celery -A landbot worker --loglevel=info &
+        env:
+          CELERY_BROKER_URL: redis://localhost:6379/0
+          CELERY_RESULT_BACKEND: redis://localhost:6379/0
+
       - name: Test with pytest
+        env:
+          CELERY_BROKER_URL: redis://localhost:6379/0
+          CELERY_RESULT_BACKEND: redis://localhost:6379/0
         run: |
           poetry run pytest -vvv
